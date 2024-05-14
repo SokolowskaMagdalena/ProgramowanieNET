@@ -70,3 +70,7 @@ TestResult.xml
 .idea_settings.jar
 .idea/libraries
 .idea/repl
+
+*.vsidx
+
+*/.vs/
