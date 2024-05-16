@@ -10,7 +10,7 @@ namespace ProgramowanieNET
     public class Garaz
     {
         private string adres;
-        private double pojemnosc;
+        private int pojemnosc;
         private int liczbaSamochodow = 0;
         private Samochod[] samochody;
 
@@ -20,13 +20,13 @@ namespace ProgramowanieNET
             set { adres = value; }
         }
 
-        public double Pojemnosc
+        public int Pojemnosc
         {
             get { return pojemnosc; }
             set
             {
                 pojemnosc = value;
-                samochody = new Samochod[(int)value];
+                samochody = new Samochod[value];
             }
         }
 
@@ -37,19 +37,13 @@ namespace ProgramowanieNET
             samochody = null;
         }
 
-        public Garaz(string adres_, double pojemnosc_)
+        public Garaz(string adres_, int pojemnosc_)
         {
             adres = adres_;
             pojemnosc = pojemnosc_;
-            samochody = new Samochod[(int)pojemnosc_];
+            samochody = new Samochod[pojemnosc_];
         }
 
-        public Garaz(string adres, double pojemnosc, int maksymalnaLiczbaSamochodow)
-        {
-            this.adres = adres;
-            this.pojemnosc = pojemnosc;
-            this.samochody = new Samochod[maksymalnaLiczbaSamochodow];
-        }
         public void WprowadzSamochod(Samochod nowySamochod)
         {
             if (liczbaSamochodow < pojemnosc)
@@ -63,6 +57,7 @@ namespace ProgramowanieNET
                 Console.WriteLine("Garaż jest pełny. Nie można dodać kolejnego samochodu.");
             }
         }
+
         public Samochod WyprowadzSamochod()
         {
             if (liczbaSamochodow > 0)
@@ -79,6 +74,7 @@ namespace ProgramowanieNET
                 return null;
             }
         }
+
         public void WypiszInfo()
         {
             Console.WriteLine("Adres garażu: " + adres);

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Xml;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-class ManagerZadan
+public class ManagerZadan
 {
     private List<Zadanie> listaZadan;
 
@@ -49,7 +45,7 @@ class ManagerZadan
 
     public void SerializujDoJSON(string nazwaPliku)
     {
-        string json = JsonConvert.SerializeObject(listaZadan, Formatting.Indented);
+        string json = JsonConvert.SerializeObject(listaZadan, Newtonsoft.Json.Formatting.Indented);
         File.WriteAllText(nazwaPliku, json);
         Console.WriteLine($"Lista zadań została zserializowana do pliku: {nazwaPliku}");
     }
@@ -65,5 +61,42 @@ class ManagerZadan
         string json = File.ReadAllText(nazwaPliku);
         listaZadan = JsonConvert.DeserializeObject<List<Zadanie>>(json);
         Console.WriteLine($"Lista zadań została zdeserializowana z pliku: {nazwaPliku}");
+    }
+
+    public int IloscZadan()
+    {
+        return listaZadan.Count;
+    }
+
+    public void OznaczZadanie(int id)
+    {
+        Zadanie zadanie = listaZadan.Find(z => z.Id == id);
+        if (zadanie != null)
+        {
+            zadanie.CzyWykonane = !zadanie.CzyWykonane;
+            Console.WriteLine($"Zadanie o ID {id} zmieniło status na: {(zadanie.CzyWykonane ? "Wykonane" : "Nie wykonane")}");
+        }
+        else
+        {
+            Console.WriteLine($"Zadanie o ID {id} nie istnieje.");
+        }
+    }
+
+    public void SortujZadaniaPoDacie()
+    {
+        listaZadan.Sort((z1, z2) => z1.DataZakonczenia.CompareTo(z2.DataZakonczenia));
+        Console.WriteLine("Lista zadań została posortowana według daty zakończenia.");
+    }
+
+    public void SortujZadaniaPoNazwie()
+    {
+        listaZadan.Sort((z1, z2) => z1.Nazwa.CompareTo(z2.Nazwa));
+        Console.WriteLine("Lista zadań została posortowana według nazwy.");
+    }
+
+    public void SortujZadaniaPoPriorytecie()
+    {
+        listaZadan.Sort((z1, z2) => z1.Priorytet.CompareTo(z2.Priorytet));
+        Console.WriteLine("Lista zadań została posortowana według priorytetu.");
     }
 }

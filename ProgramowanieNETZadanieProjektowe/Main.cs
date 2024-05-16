@@ -88,7 +88,15 @@ class Program
             return;
         }
 
-        manager.DodajZadanie(new Zadanie(manager.IloscZadan() + 1, nazwa, opis, dataZakonczenia, false));
+        Console.Write("Podaj priorytet zadania (liczba całkowita): ");
+        int priorytet;
+        if (!int.TryParse(Console.ReadLine(), out priorytet))
+        {
+            Console.WriteLine("Nieprawidłowy format priorytetu. Podaj priorytet ponownie.");
+            return;
+        }
+
+        manager.DodajZadanie(new Zadanie(manager.IloscZadan() + 1, nazwa, opis, dataZakonczenia, false, priorytet));
         Console.WriteLine("Zadanie zostało dodane.");
     }
 
